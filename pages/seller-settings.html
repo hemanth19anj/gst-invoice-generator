@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Settings - GST Invoice Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold text-gray-800">GST Invoice Generator</h1>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="../index.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="invoice.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Create Invoice
+                        </a>
+                        <a href="customers.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Customers
+                        </a>
+                        <a href="seller-settings.html" class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium">
+                            Seller Settings
+                        </a>
+                        <a href="items.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Items
+                        </a>
+                        <a href="reports.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Reports
+                        </a>
+                    </div>
+                    <button id="logoutBtn" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Seller Settings</h2>
+            
+            <form id="sellerSettingsForm" class="space-y-6">
+                <!-- Basic Info -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="sellerName" class="block text-sm font-medium text-gray-700">Business Name *</label>
+                            <input type="text" id="sellerName" name="sellerName" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                        </div>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div>
+                                <label for="sellerPhone" class="block text-sm font-medium text-gray-700">Phone Number *</label>
+                                <input type="tel" id="sellerPhone" name="sellerPhone" required pattern="[0-9]{10}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="10 digit mobile number" />
+                            </div>
+                            <div>
+                                <label for="sellerEmail" class="block text-sm font-medium text-gray-700">Email Address *</label>
+                                <input type="email" id="sellerEmail" name="sellerEmail" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Business Address</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="sellerAddressLine1" class="block text-sm font-medium text-gray-700">Address Line 1 *</label>
+                            <input type="text" id="sellerAddressLine1" name="sellerAddressLine1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                        </div>
+                        <div>
+                            <label for="sellerAddressLine2" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+                            <input type="text" id="sellerAddressLine2" name="sellerAddressLine2" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                        </div>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div>
+                                <label for="sellerState" class="block text-sm font-medium text-gray-700">State *</label>
+                                <select id="sellerState" name="sellerState" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                    <option value="">Select State</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                    <option value="Ladakh">Ladakh</option>
+                                    <option value="Lakshadweep">Lakshadweep</option>
+                                    <option value="Puducherry">Puducherry</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="sellerPincode" class="block text-sm font-medium text-gray-700">Pin Code *</label>
+                                <input type="text" id="sellerPincode" name="sellerPincode" required pattern="[0-9]{6}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GST Info -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">GST Information</h3>
+                    <div>
+                        <label for="sellerGst" class="block text-sm font-medium text-gray-700">GST Number *</label>
+                        <input type="text" id="sellerGst" name="sellerGst" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                    </div>
+                </div>
+
+                <!-- Invoice Settings -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Invoice Settings</h3>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div>
+                            <label for="invoicePrefix" class="block text-sm font-medium text-gray-700">Invoice Number Prefix</label>
+                            <input type="text" id="invoicePrefix" name="invoicePrefix" placeholder="e.g., INV-" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                            <p class="mt-1 text-sm text-gray-500">Optional prefix for invoice numbers (e.g., INV-001)</p>
+                        </div>
+                        <div>
+                            <label for="nextInvoiceNumber" class="block text-sm font-medium text-gray-700">Next Invoice Number</label>
+                            <input type="number" id="nextInvoiceNumber" name="nextInvoiceNumber" min="1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                            <p class="mt-1 text-sm text-gray-500">Next sequential number for new invoices</p>
+                        </div>
+                        <div>
+                            <label for="invoicePadding" class="block text-sm font-medium text-gray-700">Number Padding</label>
+                            <input type="number" id="invoicePadding" name="invoicePadding" min="1" max="10" value="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                            <p class="mt-1 text-sm text-gray-500">Number of digits to pad with zeros (e.g., 3 = 001)</p>
+                        </div>
+                        <div>
+                            <label for="invoiceNote" class="block text-sm font-medium text-gray-700">Default Terms & Conditions</label>
+                            <textarea id="invoiceNote" name="invoiceNote" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">1. Payment should be made within 30 days from the date of invoice.
+2. Goods once sold cannot be returned.
+3. Interest @18% p.a. will be charged on delayed payments.
+4. Subject to local jurisdiction.</textarea>
+                            <p class="mt-1 text-sm text-gray-500">Default terms & conditions to appear on all invoices</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo and Signature -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Logo & Signature</h3>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div>
+                            <label for="sellerLogoUrl" class="block text-sm font-medium text-gray-700">Logo URL</label>
+                            <input type="url" id="sellerLogoUrl" name="sellerLogoUrl" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                        </div>
+                        <div>
+                            <label for="sellerSignUrl" class="block text-sm font-medium text-gray-700">Signature URL</label>
+                            <input type="url" id="sellerSignUrl" name="sellerSignUrl" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-200 pt-6">
+                    <div class="flex justify-end">
+                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save Settings
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../js/firebase.js"></script>
+    <script src="../js/modules/seller-settings.js"></script>
+</body>
+</html>

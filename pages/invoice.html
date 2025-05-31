@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Invoice - GST Invoice Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold text-gray-800">GST Invoice Generator</h1>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="../index.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="invoice.html" class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium">
+                            Create Invoice
+                        </a>
+                        <a href="customers.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Customers
+                        </a>
+                        <a href="seller-settings.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Seller Settings
+                        </a>
+                        <a href="items.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Items
+                        </a>
+                        <a href="reports.html" class="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium">
+                            Reports
+                        </a>
+                    </div>
+                    <button id="logoutBtn" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Invoice Form -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Create New Invoice</h2>
+                <div class="flex space-x-3">
+                    <button id="saveInvoiceBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                        Save Invoice
+                    </button>
+                    <button id="previewInvoiceBtn" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Preview
+                    </button>
+                    <button id="exportPdfBtn" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Export PDF
+                    </button>
+                    <button id="printInvoiceBtn" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Print Invoice
+                    </button>
+                </div>
+            </div>
+
+            <form id="invoiceForm" class="space-y-8">
+                <!-- Invoice Details Section -->
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Invoice Number</label>
+                        <input type="text" id="invoiceNumber" readonly class="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-50" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Invoice Date</label>
+                        <input type="date" id="invoiceDate" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                    </div>
+                </div>
+                <input type="hidden" id="logoUrl" />
+                <input type="hidden" id="signatureUrl" />
+
+                <!-- Customer Details Section -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Customer Details</h3>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div class="col-span-2">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-grow">
+                                    <label class="block text-sm font-medium text-gray-700">Select Customer</label>
+                                    <select id="customerSelect" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                        <option value="">Select or add new customer</option>
+                                    </select>
+                                </div>
+                                <button type="button" id="addNewCustomerBtn" class="mt-6 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    Add New Customer
+                                </button>
+                            </div>
+                        </div>
+                        <div id="customerDetails" class="col-span-2 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <!-- Customer details will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Section -->
+                <div class="border-t border-gray-200 pt-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Items</h3>
+                        <button type="button" id="addItemBtn" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Add Item
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UOM</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rate (₹)</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GST %</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Items will be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Totals Section -->
+                <div class="border-t border-gray-200 pt-6">
+                    <div class="flex justify-end items-center space-x-6 mb-4">
+                        <label for="gstOption" class="text-sm font-medium text-gray-700">GST Calculation:</label>
+                        <select id="gstOption" class="border border-gray-300 rounded-md shadow-sm text-sm py-1 px-2">
+                            <option value="exclusive" selected>Exclusive</option>
+                            <option value="inclusive">Inclusive</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end">
+                        <div class="w-72">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="text-sm font-medium text-gray-500">Subtotal:</div>
+                                <div class="text-sm font-medium text-gray-900 text-right" id="subtotal">₹0.00</div>
+                                <div class="text-sm font-medium text-gray-500">CGST:</div>
+                                <div class="text-sm font-medium text-gray-900 text-right" id="cgst">₹0.00</div>
+                                <div class="text-sm font-medium text-gray-500">SGST:</div>
+                                <div class="text-sm font-medium text-gray-900 text-right" id="sgst">₹0.00</div>
+                                <div class="text-sm font-medium text-gray-500">IGST:</div>
+                                <div class="text-sm font-medium text-gray-900 text-right" id="igst">₹0.00</div>
+                                <div class="text-base font-medium text-gray-900">Round Off:</div>
+                                <div class="text-base font-medium text-gray-900 text-right" id="roundOff">₹0.00</div>
+                                <div class="text-base font-medium text-gray-900">Total:</div>
+                                <div class="text-base font-medium text-gray-900 text-right" id="total">₹0.00</div>
+                                <div class="col-span-2 text-sm text-gray-500 mt-2" id="amountInWords">Amount in words: </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Details Section -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Additional Details</h3>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Bank Details</label>
+                            <textarea id="bankDetails" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="NA"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Transport Details</label>
+                            <textarea id="transportDetails" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="NA"></textarea>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700">Terms and Conditions</label>
+                            <textarea id="termsConditions" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Add New Customer Modal -->
+    <div id="customerModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg p-6 max-w-4xl w-full my-8">
+                <!-- Modal content will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="itemModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg p-6 max-w-lg w-full my-8">
+                <!-- Modal content will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../js/firebase.js"></script>
+    <script src="../js/modules/invoice.js"></script>
+</body>
+</html>
